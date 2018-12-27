@@ -18,3 +18,4 @@ class WinterAmzItem(scrapy.Item):
 
 class DataAsin(scrapy.Item):
     product_data_asin = scrapy.Field()
+
