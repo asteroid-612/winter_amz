@@ -14,3 +14,6 @@ class WinterAmzItem(scrapy.Item):
     product_name = scrapy.Field()
     product_item_exp = scrapy.Field()
     product_category = scrapy.Field()
+
+class DataAsin(scrapy.Item):
+    product_data_asin = scrapy.Field()
