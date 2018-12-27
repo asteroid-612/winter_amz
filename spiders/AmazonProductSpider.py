@@ -9,13 +9,11 @@ with open('dataasins.json') as data_file:
 class AmazonProductsSpider(scrapy.Spider):
     name = "AmazonItems"
     allowed_domains = ["amazon.com"]
-    data_asins = data[0]["product_data_asin"].split(',') # product code list
+    data_asins = [] # product code list
+    for i in range(len(data)):
+        data_asins.extend(data[i]["product_data_asin"].split(","))
     for j in range(len(data_asins)):
         data_asins[j] = 'https://www.amazon.com/dp/' + data_asins[j]
-##    start_urls = [
-##        "https://www.amazon.com/dp/B07BKSR1SG", "https://www.amazon.com/dp/B07JKD2378",
-##        "https://www.amazon.com/dp/B07K4Z7CGB", "https://www.amazon.com/dp/B07KPVSCDS"
-##        ]
     # want to do : start_urls from amazon.com, can't we just extract it from that url?
     # start_urls is initialized in empty form, and the process gets the item code "XXXXXXXXXX"(10digits) from amazon.com
 
