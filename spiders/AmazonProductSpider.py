@@ -28,9 +28,11 @@ class AmazonProductsSpider(scrapy.Spider):
         title = response.xpath('//h1[@id="title"]/span/text()').extract()
         item_exp = response.xpath('//div[@id="feature-bullets"]//li/span[@class="a-list-item"]/text()').extract()
         category = response.xpath('//a[@class="a-link-normal a-color-tertiary"]/text()').extract()
+        image = response.xpath('//img[@id="landingImage"]/@src').extract()
         items['product_name'] = ''.join(title).strip()
         items['product_item_exp'] = ",".join(map(lambda x: x.strip(), item_exp)).strip()
         items['product_category'] = ",".join(map(lambda x: x.strip(), category)).strip()
+        items['product_image_url'] = ''.join(image).strip()
         yield items
 
 
