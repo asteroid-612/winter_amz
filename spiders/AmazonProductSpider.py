@@ -23,13 +23,18 @@ class AmazonProductsSpider(scrapy.Spider):
 
     def parse(self, response):
         items = WinterAmzItem()
+        cur_url_id = response.request.url.split("/")[-1]
         title = response.xpath('//h1[@id="title"]/span/text()').extract()
         item_exp = response.xpath('//div[@id="feature-bullets"]//li/span[@class="a-list-item"]/text()').extract()
-        category = response.xpath('//a[@class="a-link-normal a-color-tertiary"]/text()').extract()
-        image = response.xpath('//img[@id="landingImage"]/@src').extract()
-        items['product_name'] = ''.join(title).strip()
-        items['product_item_exp'] = ",".join(map(lambda x: x.strip(), item_exp)).strip()
-        items['product_category'] = ",".join(map(lambda x: x.strip(), category)).strip()
+        feature = ",".join(map(lambda x: x.strip(), item_exp)).strip().split(",")
+        full_category = response.xpath('//a[@class="a-link-normal a-color-tertiary"]/text()').extract()
+        category = "Fashion Hoodies & Sweatshirts"
+        image = response.xpath('//img[@id="landingImage"]/@data-old-hires').extract()
+        items['id'] = ''.join(cur_url_id).strip()
+        items['title'] = ''.join(title).strip()
+        items['category'] = ''.join(category).strip()
+        items['fullCategory'] = ",".join(map(lambda x: x.strip(), full_category)).strip()
+        items['features'] = [] + feature
         items['product_image_url'] = ''.join(image).strip()
         yield items
 
